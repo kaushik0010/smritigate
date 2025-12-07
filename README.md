@@ -29,8 +29,8 @@ SmritiVerse is a browser-based Mixed Reality application that democratizes trave
 
 1.  **Clone the repo:**
     ```bash
-    git clone https://github.com/kaushik0010/SmritiVerse.git
-    cd SmritiVerse
+    git clone https://github.com/kaushik0010/smritiverse.git
+    cd smritiverse
     ```
 
 2.  **Install dependencies:**
