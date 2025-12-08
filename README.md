@@ -1,14 +1,14 @@
-# SmritiVerse (स्मृति-Verse) 🌌
+# SmritiGate (स्मृति-Gate) 🌌
 
 > **"Relive the Unseen."**
 > A Mixed Reality Travel Experience for Meta Quest.
 
-SmritiVerse is a browser-based Mixed Reality application that democratizes travel. It allows users to open magical portals in their living room, step into photorealistic 3D scans of the world's most beautiful locations, and discover the emotional stories hidden within them.
+SmritiGate is a browser-based Mixed Reality application that democratizes travel. It allows users to open magical portals in their living room, step into photorealistic 3D scans of the world's most beautiful locations, and discover the emotional stories hidden within them.
 
 **Built for the Meta Horizon Start Developer Competition 2025.**
 
 ## 🎥 Demo Video
-[Link to your YouTube Video Here]
+[YouTube Video](https://youtu.be/qkGHdBAR86g)
 
 ## 🌟 Key Features
 
@@ -29,8 +29,8 @@ SmritiVerse is a browser-based Mixed Reality application that democratizes trave
 
 1.  **Clone the repo:**
     ```bash
-    git clone https://github.com/kaushik0010/smritiverse.git
-    cd smritiverse
+    git clone https://github.com/kaushik0010/smritigate.git
+    cd smritigate
     ```
 
 2.  **Install dependencies:**
@@ -47,13 +47,27 @@ SmritiVerse is a browser-based Mixed Reality application that democratizes trave
     * Open the link (e.g., `https://localhost:8081`) in your Meta Quest Browser.
     * Or use the **Immersive Web Emulator** extension in Chrome on Desktop.
 
+## 🎮 Controls (Desktop Emulator)
+
+When running the project in a browser without a VR headset (e.g., on `localhost` during development), you can use keyboard and mouse shortcuts to simulate movement and interaction.
+
+| Action | Input |
+| :--- | :--- |
+| **Move Forward** | `Shift + W` |
+| **Move Backward** | `Shift + S` |
+| **Strafe Left** | `Shift + A` |
+| **Strafe Right** | `Shift + D` |
+| **Elevate Up (Fly)** | `Shift + Up Arrow` |
+| **Elevate Down** | `Shift + Down Arrow` |
+| **Look Around** | Click & Drag Mouse |
+| **Interact/Click** | `Left Mouse Button - Left Hand` and `Right Mouse Button - Right Hand` |
 
 ## 🔮 Future Roadmap: The "Airbnb for Memories"
 
-SmritiVerse is built to scale from a curated experience into a global platform for shared human connection.
+SmritiGate is built to scale from a curated experience into a global platform for shared human connection.
 
 ### 1. User-Generated Memories (UGC Economy)
-* **Upload Your World:** Empower users to capture their own local treasures using mobile photogrammetry (Polycam, Luma AI) and upload them to the SmritiVerse cloud.
+* **Upload Your World:** Empower users to capture their own local treasures using mobile photogrammetry (Polycam, Luma AI) and upload them to the SmritiGate cloud.
 * **Creator Monetization:** Implement a revenue-sharing model where creators earn a commission every time a user visits their scanned memory. This incentivizes high-quality, authentic captures of rare locations.
 * **Quality Assurance:** An AI-assisted review process will ensure all uploaded scans meet performance and visual standards before going live.
 

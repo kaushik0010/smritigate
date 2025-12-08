@@ -13,6 +13,7 @@ import {
   Plane,
   DoubleSide,
   PlaneGeometry,
+  createSystem,
 } from "@iwsdk/core";
 
 import { PortalSystem } from "./portal-system";
@@ -44,15 +45,15 @@ const destinations: DestinationConfig[] = [
     name: "Kyoto Shrine",
     description: "A peaceful path of 1000 gates.",
     assetId: "shrine",
-    audioUrl: "/audio/shrine.mp3",
+    audioUrl: "/audio/shrine.m4a",
     scale: 1.0,
-    offset: { x: 0, y: -1.6, z: -2.5 }, 
-    rotationY: 0,
+    offset: { x: 0, y: 3.2, z: -18.5 }, 
+    rotationY: 90,
     lightIntensity: 0.4,
     skyColor: 0x87CEEB,
     hotspots: [
       { 
-        x: 17.5, y: 2.8, z: -6.2, 
+        x: 3.8, y: 5.8, z: -40.8, 
         title: "The Guardian", 
         story: "My sister loved this fox statue. She said it watches over travelers." 
       }
@@ -65,7 +66,7 @@ const destinations: DestinationConfig[] = [
     assetId: "temple", 
     audioUrl: "/audio/crickets.mp3",
     scale: 0.02,
-    offset: { x: 0, y: -8.2, z: 5.0 }, 
+    offset: { x: 0, y: -8.2, z: 2.0 }, 
     rotationY: 0,
     lightIntensity: 1.2, 
     skyColor: 0x050510,
@@ -74,6 +75,25 @@ const destinations: DestinationConfig[] = [
         x: 4.5, y: 1.5, z: -12.0, 
         title: "The Stone Lion", 
         story: "Legend says these lions come alive at night to protect the temple." 
+      }
+    ]
+  },
+  {
+    id: "mansion",
+    name: "Snowy Courtyard",
+    description: "A silent, snow-covered ancestral home in the mountains.",
+    assetId: "mansion", 
+    audioUrl: "/audio/solo-guzheng.m4a",
+    scale: 60,
+    offset: { x: -10, y: 1.5, z: 2 }, 
+    rotationY: 0,
+    lightIntensity: 0.5, 
+    skyColor: 0x2a4b7c,
+    hotspots: [
+      { 
+        x: 1.2, y: 1.5, z: -5.0, 
+        title: "The Winter Oath", 
+        story: "Every first snowfall, my grandfather would stand here and promise to keep the family together, no matter how hard the winter got. I can still feel his resolve in this silence." 
       }
     ]
   },
@@ -87,6 +107,11 @@ const assets: AssetManifest = {
   },
   temple: {
     url: "/gltf/temple-optimized.glb",
+    type: AssetType.GLTF,
+    priority: "critical",
+  },
+  mansion: {
+    url: "/gltf/chinese-mansion-optimized.glb",
     type: AssetType.GLTF,
     priority: "critical",
   },
@@ -260,6 +285,7 @@ export function startExperience() {
 
       if (event.key === '1') loadDestination(destinations[0]); 
       if (event.key === '2') loadDestination(destinations[1]); 
+      if (event.key === '3') loadDestination(destinations[2]); 
     });
   });
 }
@@ -276,11 +302,15 @@ function autoFitModel(
   model.traverse((child: any) => {
     if (child.isObject3D) child.updateMatrixWorld(true);
   });
-
   const box = new Box3().setFromObject(model);
 
   if (box.isEmpty() || !isFinite(box.max.z)) {
-    model.position.set(0, -1.6, -10);
+    
+    model.position.set(
+        manualOffset.x, 
+        -1.6 + manualOffset.y, 
+        -5.0 + manualOffset.z
+    );
     return;
   }
 
@@ -288,8 +318,12 @@ function autoFitModel(
   box.getCenter(center);
 
   const offsetX = -center.x + manualOffset.x;
+  
+  // Floor Logic
   const floorY = Number.isFinite(box.min.y) ? box.min.y : 0;
-  const offsetY = (-floorY - 1.6) + manualOffset.y;
+  const offsetY = (-floorY - 1.6) + manualOffset.y; 
+
+  // Depth Logic
   const frontZ = Number.isFinite(box.max.z) ? box.max.z : center.z;
   const offsetZ = (portalZ - frontZ) - 0.5 + manualOffset.z;
 
