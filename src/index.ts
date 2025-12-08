@@ -14,6 +14,10 @@ import {
   DoubleSide,
   PlaneGeometry,
   createSystem,
+  Color,
+  SphereGeometry,
+  ShaderMaterial,
+  BackSide,
 } from "@iwsdk/core";
 
 import { PortalSystem } from "./portal-system";
@@ -35,7 +39,7 @@ interface DestinationConfig {
   offset: { x: number; y: number; z: number };
   rotationY: number; 
   lightIntensity: number;
-  skyColor: number;
+  skyColor: { top: number; bottom: number };
   hotspots: { x: number; y: number; z: number; title: string; story: string }[];
 }
 
@@ -50,7 +54,7 @@ const destinations: DestinationConfig[] = [
     offset: { x: 0, y: 3.2, z: -18.5 }, 
     rotationY: 90,
     lightIntensity: 0.4,
-    skyColor: 0x87CEEB,
+    skyColor: { top: 0x87CEEB, bottom: 0xffaa55 },
     hotspots: [
       { 
         x: 3.8, y: 5.8, z: -40.8, 
@@ -68,8 +72,8 @@ const destinations: DestinationConfig[] = [
     scale: 0.02,
     offset: { x: 0, y: -8.2, z: 2.0 }, 
     rotationY: 0,
-    lightIntensity: 1.2, 
-    skyColor: 0x050510,
+    lightIntensity: 0.8, 
+    skyColor: { top: 0x020210, bottom: 0x2a2a50 },
     hotspots: [
       { 
         x: 4.5, y: 1.5, z: -12.0, 
@@ -88,7 +92,7 @@ const destinations: DestinationConfig[] = [
     offset: { x: -10, y: 1.5, z: 2 }, 
     rotationY: 0,
     lightIntensity: 0.5, 
-    skyColor: 0x2a4b7c,
+    skyColor: { top: 0x0a1a3a, bottom: 0x6688aa },
     hotspots: [
       { 
         x: 1.2, y: 1.5, z: -5.0, 
@@ -220,7 +224,7 @@ export function startExperience() {
       // Update Sky Color in Portal System
       const portalSys = world.getSystem(PortalSystem) as any;
       if (portalSys) {
-          portalSys.updateSkyColor(config.skyColor);
+          portalSys.updateSkyGradient(config.skyColor.top, config.skyColor.bottom);
       }
 
       currentHtmlAudio.src = config.audioUrl;

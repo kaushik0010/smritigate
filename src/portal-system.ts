@@ -1,14 +1,51 @@
 import { createSystem } from "@iwsdk/core";
 import * as THREE from "three";
 
+// DEFINE THE SHADERS
+const vertexShader = `
+  varying vec3 vWorldPosition;
+  #include <clipping_planes_pars_vertex>
+
+  void main() {
+    // 1. Calculate World Position (for the Gradient)
+    vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+    vWorldPosition = worldPosition.xyz;
+
+    // 2. Calculate Model-View Position (REQUIRED for Clipping)
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // 3. Run the Clipping Logic
+    #include <clipping_planes_vertex>
+
+    // 4. Set Final Position
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+const fragmentShader = `
+  uniform vec3 topColor;
+  uniform vec3 bottomColor;
+  uniform float offset;
+  uniform float exponent;
+  varying vec3 vWorldPosition;
+
+  #include <clipping_planes_pars_fragment>
+
+  void main() {
+    #include <clipping_planes_fragment>
+    
+    float h = normalize( vWorldPosition + offset ).y;
+    gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+  }
+`;
+
 export class PortalSystem extends createSystem({}) {
   private portalZ = -2.0; 
   public isInside = false;
-  public currentSkyHex = 0x87CEEB; 
 
   // Visuals
   private skyMesh: THREE.Mesh | null = null;
-  private skyMat: THREE.MeshBasicMaterial | null = null;
+  private skyMat: THREE.ShaderMaterial | null = null; 
   private portalFrame: THREE.Mesh | null = null;
   private exitHole: THREE.Mesh | null = null;
   private exitSign: THREE.Mesh | null = null;
@@ -25,11 +62,21 @@ export class PortalSystem extends createSystem({}) {
   createSkySphere() {
     const geo = new THREE.SphereGeometry(80, 32, 32);
     
-    this.skyMat = new THREE.MeshBasicMaterial({
-        color: this.currentSkyHex, 
+    const uniforms = {
+      topColor: { value: new THREE.Color(0x0077ff) },
+      bottomColor: { value: new THREE.Color(0xffffff) },
+      offset: { value: 33 },
+      exponent: { value: 0.6 }
+    };
+
+    this.skyMat = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
         side: THREE.BackSide, 
-        clippingPlanes: [this.clipPlane],
-        clipShadows: true
+        clippingPlanes: [this.clipPlane], // Must be present
+        clipShadows: true,
+        clipping: true // <--- CRITICAL
     });
 
     this.skyMesh = new THREE.Mesh(geo, this.skyMat);
@@ -101,15 +148,14 @@ export class PortalSystem extends createSystem({}) {
       this.world.scene.add(this.exitHole);
   }
 
-  updateSkyColor(hex: number) {
-      this.currentSkyHex = hex;
+  // --- 3. UPDATE THIS METHOD TO ACCEPT 2 COLORS ---
+  updateSkyGradient(topHex: number, bottomHex: number) {
       if (this.skyMat) {
-          this.skyMat.color.setHex(hex);
-      }
-      if (this.portalFrame) {
-          (this.portalFrame.material as THREE.MeshBasicMaterial).color.setHex(0xFFFFFF);
+          this.skyMat.uniforms.topColor.value.setHex(topHex);
+          this.skyMat.uniforms.bottomColor.value.setHex(bottomHex);
       }
   }
+  // ------------------------------------------------
 
   update() {
     if (this.skyMesh) {

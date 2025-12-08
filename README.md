@@ -83,5 +83,11 @@ SmritiGate is built to scale from a curated experience into a global platform fo
 * **Bring It Home:** Allow users to "grab" small 3D objects from the virtual world (like a fox mask or a bamboo shoot) and bring them back into their real room.
 * **Persistent Decoration:** Using Mixed Reality Anchors, these souvenirs stay on your real-world desk or shelf, serving as a permanent reminder of your virtual journey.
 
+## ⚠️ Known Issues & Hardware Notes
+
+* **Controller Support:** This experience is heavily optimized for **Hand Tracking** and the **Virtual UI**.
+* **Beta Controller Input:** Using physical VR controllers (Touch Controllers) for locomotion is currently experimental and may result in hypersensitive movement speed.
+* **Recommendation:** For the intended experience, please put down the controllers and use **Hand Tracking** or the on-screen **UI Buttons** to move.
+
 ## 📜 Credits
 See [CREDITS.md](./CREDITS.md) for a full list of assets used.
