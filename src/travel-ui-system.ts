@@ -40,7 +40,7 @@ export class TravelUISystem extends createSystem({}) {
     }
 
     entity.addComponent(PanelUI, {
-      config: "/ui/travel-menu.json",
+      config: "ui/travel-menu.json",
       maxWidth: 0.25, 
     });
     

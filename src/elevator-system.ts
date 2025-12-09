@@ -17,7 +17,6 @@ export class ElevatorSystem extends createSystem({
   private uiEntity: any = null;
 
   init() {
-    console.log("✨ Elevator System Initialized");
     this.spawnUI();
   }
 
@@ -28,22 +27,20 @@ export class ElevatorSystem extends createSystem({
         entity.object3D.position.set(-0.8, 1.2, -0.5);
         entity.object3D.renderOrder = 999;
         
-        // FIX: Disable Fog and ToneMapping so UI looks crisp in bright scenes
         entity.object3D.traverse((c: any) => {
             if (c.isMesh && c.material) {
                 c.material.depthTest = false; 
                 c.material.depthWrite = false;
                 c.material.transparent = true;
                 
-                // CRITICAL FIXES FOR BAMBOO SCENE:
-                c.material.fog = false;        // Ignore the white fog
-                c.material.toneMapped = false; // Keep colors true (don't darken/brighten)
+                c.material.fog = false;        
+                c.material.toneMapped = false; 
             }
         });
     }
 
     entity.addComponent(PanelUI, {
-      config: "/ui/elevator.json",
+      config: "ui/elevator.json",
       maxWidth: 0.25, 
     });
     
@@ -73,7 +70,6 @@ export class ElevatorSystem extends createSystem({
   }
 
   moveWorld(amount: number) {
-      console.log(`🚀 Shifting World by ${amount}m`);
       this.queries.targets.entities.forEach((entity: any) => {
           if (entity.object3D) {
               entity.object3D.position.y += amount;

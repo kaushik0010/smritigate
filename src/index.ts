@@ -13,11 +13,6 @@ import {
   Plane,
   DoubleSide,
   PlaneGeometry,
-  createSystem,
-  Color,
-  SphereGeometry,
-  ShaderMaterial,
-  BackSide,
 } from "@iwsdk/core";
 
 import { PortalSystem } from "./portal-system";
@@ -49,7 +44,7 @@ const destinations: DestinationConfig[] = [
     name: "Kyoto Shrine",
     description: "A peaceful path of 1000 gates.",
     assetId: "shrine",
-    audioUrl: "/audio/shrine.m4a",
+    audioUrl: "audio/shrine.m4a",
     scale: 1.0,
     offset: { x: 0, y: 3.2, z: -18.5 }, 
     rotationY: 90,
@@ -68,7 +63,7 @@ const destinations: DestinationConfig[] = [
     name: "Chinese Temple",
     description: "Ancient stone lions watch over this sacred ground.",
     assetId: "temple", 
-    audioUrl: "/audio/crickets.mp3",
+    audioUrl: "audio/crickets.mp3",
     scale: 0.02,
     offset: { x: 0, y: -8.2, z: 2.0 }, 
     rotationY: 0,
@@ -87,7 +82,7 @@ const destinations: DestinationConfig[] = [
     name: "Snowy Courtyard",
     description: "A silent, snow-covered ancestral home in the mountains.",
     assetId: "mansion", 
-    audioUrl: "/audio/solo-guzheng.m4a",
+    audioUrl: "audio/solo-guzheng.m4a",
     scale: 60,
     offset: { x: -10, y: 1.5, z: 2 }, 
     rotationY: 0,
@@ -105,22 +100,22 @@ const destinations: DestinationConfig[] = [
 
 const assets: AssetManifest = {
   shrine: {
-    url: "/gltf/shrine-optimized.glb",
+    url: "gltf/shrine-optimized.glb",
     type: AssetType.GLTF,
     priority: "critical",
   },
   temple: {
-    url: "/gltf/temple-optimized.glb",
+    url: "gltf/temple-optimized.glb",
     type: AssetType.GLTF,
     priority: "critical",
   },
   mansion: {
-    url: "/gltf/chinese-mansion-optimized.glb",
+    url: "gltf/chinese-mansion-optimized.glb",
     type: AssetType.GLTF,
     priority: "critical",
   },
   portalFrame: {
-    url: "/gltf/stone_gate.glb",
+    url: "gltf/stone_gate.glb",
     type: AssetType.GLTF,
     priority: "critical",
   },

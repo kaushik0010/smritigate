@@ -48,7 +48,7 @@ export class MemoryUISystem extends createSystem({}) {
     }
 
     cardEntity.addComponent(PanelUI, {
-      config: "/ui/memory-card.json", 
+      config: "ui/memory-card.json", 
       maxWidth: 0.5, 
     });
 

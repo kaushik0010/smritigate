@@ -39,7 +39,7 @@ export class MovementSystem extends createSystem({
     }
 
     entity.addComponent(PanelUI, {
-      config: "/ui/movement.json",
+      config: "ui/movement.json",
       maxWidth: 0.25, 
     });
     

@@ -69,8 +69,6 @@ export class HotspotSystem extends createSystem({
       const dist = this.tempOrbPos.distanceTo(this.tempCamPos);
 
       if (time - this.lastLogTime > 1.0) {
-          // console.log(`📏 Dist: ${dist.toFixed(2)}m`);
-          console.log(`📏 Dist: ${dist.toFixed(2)}m | Open: ${entity.object3D.userData.isOpen}`);
           this.lastLogTime = time;
       }
 
@@ -94,7 +92,6 @@ export class HotspotSystem extends createSystem({
       }
 
       // Case C: Trigger Logic
-      // FIX: SAFE CHECK for getComponent
       let isClicked = false;
       if (typeof entity.getComponent === 'function') {
           const interactable = entity.getComponent(Interactable);
@@ -110,7 +107,6 @@ export class HotspotSystem extends createSystem({
   }
 
   openMemory(entity: any) {
-    console.log("🚀 openMemory called!");
       entity.object3D.userData.isOpen = true;
 
       let title = "Memory";
